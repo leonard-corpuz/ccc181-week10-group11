@@ -1,4 +1,4 @@
-# CCC181 Week 10: CampusConnect Mobile-First Login Page
+  # CCC181 Week 10: CampusConnect Mobile-First Login Page
 
 React + TypeScript starter for the Week 10 group activity. The page is already
 built. Your group's job is the **mobile-first CSS** and the **GitHub teamwork**.
@@ -23,7 +23,7 @@ npm run build        # must finish with no errors before you submit
 
 | Item | Your answer |
 | --- | --- |
-| Group number | |
+| Group number |11|
 | Section | |
 | Repository URL | |
 
