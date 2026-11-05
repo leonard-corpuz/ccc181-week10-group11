@@ -78,3 +78,11 @@
   margin-block: 1rem 0; /* not "margin: 1rem 0 0": see Mistakes */
   font-size: 0.875rem;
 }
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* brand LEFT, links RIGHT */
+  }
+  .nav-list { flex-direction: row; gap: 0.5rem; } /* links in ONE row */
+}
