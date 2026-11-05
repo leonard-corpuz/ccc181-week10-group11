@@ -31,12 +31,7 @@ npm run build        # must finish with no errors before you submit
 
 | Member | Name | GitHub username | CSS file | What I did |
 | --- | --- | --- | --- | --- |
-| 1 (leader) |Leonard III N. Corpuz|leonard-corpuz| `base.css,form.css` |•	base.css: added the viewport meta tag in index.html; built the mobile-first page frame with CSS Grid (one-column layout and brand panel), switched to two columns at 1024 px, and centered the container at 1200 px from 1280 px.
-•	form.css (phone part): styled the login card, 48 px fields with 16 px text, the Flexbox password row, messages, stacked options row, full-width buttons and divider.
-•	Also: set up the repository, ran Experiment 0, and checked npm run build at the end.
-•	Tools / breakpoints: CSS Grid, Flexbox, rem; 768, 1024 and 1280 px.
-•	form.css (tablet/desktop part): from 768 px the card is capped at 32rem and centered, the checkbox and "Forgot password?" share a row, and the two buttons sit side by side; from 1024 px the card gets roomier padding and a larger title.
-•	Also: ran the DevTools tests at 360, 768, 1024 and 1280 px and took the screenshots.
+| 1 (leader) |Leonard III N. Corpuz|leonard-corpuz| `base.css,form.css` |base.css: added the viewport meta tag in index.html; built the mobile-first page frame with CSS Grid (one-column layout and brand panel), switched to two columns at 1024 px, and centered the container at 1200 px from 1280 px. form.css (phone part): styled the login card, 48 px fields with 16 px text, the Flexbox password row, messages, stacked options row, full-width buttons and divider.Also: set up the repository, ran Experiment 0, and checked npm run build at the end.Tools / breakpoints: CSS Grid, Flexbox, rem; 768, 1024 and 1280 px.form.css (tablet/desktop part): from 768 px the card is capped at 32rem and centered, the checkbox and "Forgot password?" share a row, and the two buttons sit side by side; from 1024 px the card gets roomier padding and a larger title.Also: ran the DevTools tests at 360, 768, 1024 and 1280 px and took the screenshots.
 | 2 |Neil Stephen C. Saylan|neilsaylan| `nav.css,form.css` |•	nav.css: built the navbar with Flexbox (stacked 48 px links on phones, one row from 768 px) and the footer with CSS Grid (one column on phones, three columns from 1024 px); every :hover also has :focus-visible.•	Tools / breakpoints: Flexbox, CSS Grid; 768 and 1024 px.|
 
 ## Experiment 0: the page without the viewport tag
