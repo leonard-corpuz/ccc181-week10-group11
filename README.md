@@ -31,8 +31,8 @@ npm run build        # must finish with no errors before you submit
 
 | Member | Name | GitHub username | CSS file | What I did |
 | --- | --- | --- | --- | --- |
-| 1 (leader) | |Leonard III N. Corpuz| `base.css``form.css` | |
-| 2 | |Neil Stephen C. Saylan| `nav.css``form.css` | |
+| 1 (leader) |Leonard III N. Corpuz|leonard-corpuz| `base.css,form.css` | |
+| 2 |Neil Stephen C. Saylan|| `nav.css,form.css` | |
 
 ## Experiment 0: the page without the viewport tag
 
