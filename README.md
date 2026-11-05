@@ -39,7 +39,7 @@ npm run build        # must finish with no errors before you submit
 What did the page look like in DevTools phone mode **before** adding the viewport meta tag?
 What changed **after** adding it?
 
-> (write your answer here)
+> Before adding the viewport meta tag the fonts are small and far apart after adding the viewport meta tag its now bigger and not far apart.
 
 ## DevTools test results
 
