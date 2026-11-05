@@ -37,7 +37,6 @@ npm run build        # must finish with no errors before you submit
 •	Tools / breakpoints: CSS Grid, Flexbox, rem; 768, 1024 and 1280 px.
 •	form.css (tablet/desktop part): from 768 px the card is capped at 32rem and centered, the checkbox and "Forgot password?" share a row, and the two buttons sit side by side; from 1024 px the card gets roomier padding and a larger title.
 •	Also: ran the DevTools tests at 360, 768, 1024 and 1280 px and took the screenshots.
-|
 | 2 |Neil Stephen C. Saylan|neilsaylan| `nav.css,form.css` |•	nav.css: built the navbar with Flexbox (stacked 48 px links on phones, one row from 768 px) and the footer with CSS Grid (one column on phones, three columns from 1024 px); every :hover also has :focus-visible.•	Tools / breakpoints: Flexbox, CSS Grid; 768 and 1024 px.|
 
 ## Experiment 0: the page without the viewport tag
