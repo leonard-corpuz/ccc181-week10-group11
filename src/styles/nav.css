@@ -86,3 +86,6 @@
   }
   .nav-list { flex-direction: row; gap: 0.5rem; } /* links in ONE row */
 }
+@media (min-width: 1024px) {
+  .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
