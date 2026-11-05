@@ -69,3 +69,6 @@
     padding-left: 1.25rem;
   }
 }
+@media (min-width: 1280px) {
+  .container { max-width: 1200px; margin-inline: auto; }
+}
