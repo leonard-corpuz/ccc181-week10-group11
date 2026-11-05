@@ -23,7 +23,7 @@ npm run build        # must finish with no errors before you submit
 
 | Item | Your answer |
 | --- | --- |
-| Group number | |
+| Group number ||
 | Section | |
 | Repository URL | |
 
