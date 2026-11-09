@@ -23,6 +23,9 @@ npm run build        # must finish with no errors before you submit
 
 | Item | Your answer |
 | --- | --- |
+| Group number ||
+| Section | |
+| Repository URL | |
 | Group number |11|
 | Section |IT3-B|
 | Repository URL |https://github.com/leonard-corpuz/ccc181-week10-group11/edit/main/README.md|
