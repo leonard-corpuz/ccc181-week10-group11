@@ -1,9 +1,8 @@
-// GIVEN FILE (styled in form.css by Member 3). Do not edit.
-// The sign-in is a DEMO: nothing is sent to a server and nothing is saved.
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { LoginErrors, LoginFormValues } from '../types';
 
+const API_URL = 'http://localhost:3000/api/v1';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INITIAL_VALUES: LoginFormValues = {
@@ -27,7 +26,9 @@ export default function LoginForm() {
   const [values, setValues] = useState<LoginFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<LoginErrors>({});
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [signedInAs, setSignedInAs] = useState<string | null>(null);
+  const [welcomeName, setWelcomeName] = useState<string | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, type, value, checked } = event.target;
@@ -37,11 +38,66 @@ export default function LoginForm() {
     }));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
-    setSignedInAs(Object.keys(nextErrors).length === 0 ? values.email : null);
+    setApiError(null);
+    setWelcomeName(null);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setLoading(true);
+    try {
+      const payload = { email: values.email, password: values.password };
+      console.log('[API REQUEST] POST /sessions', {
+        email: payload.email,
+        password: '********',
+      });
+
+      const loginRes = await fetch(`${API_URL}/sessions`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const loginData = await loginRes.json().catch(() => null);
+      console.log('[API RESPONSE] POST /sessions', loginRes.status, loginData);
+
+      if (!loginRes.ok) {
+        console.error('[API ERROR] POST /sessions', loginRes.status, loginData);
+        setApiError(loginData?.message || 'Login failed. Please try again.');
+        return;
+      }
+
+      console.log('[API REQUEST] GET /users/me', '(Bearer token)');
+      const meRes = await fetch(`${API_URL}/users/me`, {
+        headers: { Authorization: `Bearer ${loginData.token}` },
+      });
+      const meData = await meRes.json().catch(() => null);
+      console.log('[API RESPONSE] GET /users/me', meRes.status, meData);
+
+      if (!meRes.ok) {
+        console.error('[API ERROR] GET /users/me', meRes.status, meData);
+        setApiError(meData?.message || 'Could not load your account.');
+        return;
+      }
+
+      setWelcomeName(meData.name);
+    } catch (err) {
+      console.error('[API ERROR] Network or server problem', err);
+      setApiError('Cannot reach the server. Is the API running?');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (welcomeName) {
+    return (
+      <section className="login-card" aria-labelledby="welcome-title">
+        <h2 id="welcome-title" className="login-card__title">
+          Welcome, {welcomeName}
+        </h2>
+      </section>
+    );
   }
 
   return (
@@ -103,7 +159,7 @@ export default function LoginForm() {
           )}
         </div>
 
-        <div className="form-options">
+                <div className="form-options">
           <label className="checkbox">
             <input
               type="checkbox"
@@ -118,14 +174,13 @@ export default function LoginForm() {
           </a>
         </div>
 
-        <button type="submit" className="btn btn--primary">
-          Sign in
+        <button type="submit" className="btn btn--primary" disabled={loading}>
+          {loading ? 'Signing in...' : 'Sign in'}
         </button>
 
-        {signedInAs && (
-          <p className="form-success" role="status">
-            Demo only: {signedInAs} would be signed in here. Nothing was sent
-            or saved.
+        {apiError && (
+          <p className="form-error" role="alert">
+            {apiError}
           </p>
         )}
       </form>
