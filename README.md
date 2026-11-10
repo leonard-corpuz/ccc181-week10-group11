@@ -63,6 +63,7 @@ Using **Show media queries** and dragging slowly from 360 px to 1280 px, the lay
 |:hover without :focus-visible|Keyboard users get no feedback, and the sheet requires both|One selector list: a:hover, a:focus-visible|
 |No viewport tag|A phone lays out at 980 px and the wrong media queries apply|A phone lays out at 980 px and the wrong media queries apply|
 |grid-template-columns on a child|Everything stays in one column|Put it on .login-layout or .footer-grid|
+
 Screenshots are in `screenshots/`.
 
 ## What our group learned (leader writes this last)
