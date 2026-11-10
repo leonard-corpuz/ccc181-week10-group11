@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { LoginErrors, LoginFormValues } from '../types';
 
 const API_URL = 'http://localhost:3000/api/v1';
+const SESSION_TOKEN_KEY = 'campusconnect-token';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INITIAL_VALUES: LoginFormValues = {
@@ -29,6 +30,59 @@ export default function LoginForm() {
   const [welcomeName, setWelcomeName] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [checkingSession, setCheckingSession] = useState<boolean>(true);
+
+  useEffect(() => {
+    let active = true;
+    const token =
+      localStorage.getItem(SESSION_TOKEN_KEY) ??
+      sessionStorage.getItem(SESSION_TOKEN_KEY);
+
+    if (!token) {
+      setCheckingSession(false);
+      return () => {
+        active = false;
+      };
+    }
+
+    async function restoreSession() {
+      try {
+        const meRes = await fetch(`${API_URL}/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (meRes.status === 401) {
+          localStorage.removeItem(SESSION_TOKEN_KEY);
+          sessionStorage.removeItem(SESSION_TOKEN_KEY);
+          return;
+        }
+
+        const meData = await meRes.json();
+        if (!meRes.ok) {
+          throw new Error(meData?.message || 'Could not load your account.');
+        }
+
+        if (active) setWelcomeName(meData.name);
+      } catch (err) {
+        console.error('[API ERROR] Could not restore session', err);
+        if (active) setApiError('Cannot reach the server. Is the API running?');
+      } finally {
+        if (active) setCheckingSession(false);
+      }
+    }
+
+    void restoreSession();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem(SESSION_TOKEN_KEY);
+    sessionStorage.removeItem(SESSION_TOKEN_KEY);
+    setWelcomeName(null);
+    setApiError(null);
+  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, type, value, checked } = event.target;
@@ -81,6 +135,10 @@ export default function LoginForm() {
         return;
       }
 
+      const storage = values.remember ? localStorage : sessionStorage;
+      const otherStorage = values.remember ? sessionStorage : localStorage;
+      otherStorage.removeItem(SESSION_TOKEN_KEY);
+      storage.setItem(SESSION_TOKEN_KEY, loginData.token);
       setWelcomeName(meData.name);
     } catch (err) {
       console.error('[API ERROR] Network or server problem', err);
@@ -96,6 +154,17 @@ export default function LoginForm() {
         <h2 id="welcome-title" className="login-card__title">
           Welcome, {welcomeName}
         </h2>
+        <button type="button" className="btn btn--secondary" onClick={handleLogout}>
+          Log out
+        </button>
+      </section>
+    );
+  }
+
+  if (checkingSession) {
+    return (
+      <section className="login-card" aria-label="Restoring session">
+        <p>Checking your session...</p>
       </section>
     );
   }
