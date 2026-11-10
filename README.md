@@ -55,6 +55,7 @@ What changed **after** adding it?
 Using **Show media queries** and dragging slowly from 360 px to 1280 px, the layout changed at these exact widths:
 
 |Mistake|Goes Wrong|Fix|
+| --- | --- | --- | 
 |padding: 0.5rem 0 on .navbar| nav.css loads after base.css, so it wipes out the container's side padding and the nav touches the screen edge|padding-block: 0.5rem|
 |margin: 1rem 0 0 on .footer-copy|Removes margin-inline: auto, so the line is not centered at 1280 px and wider|margin-block: 1rem 0|
 |.toggle-password written before .btn|Same specificity, so the later .btn rule wins|Put .toggle-password after .btn|
